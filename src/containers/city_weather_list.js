@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import {Sparklines, SparklinesLine } from 'react-sparklines';
 import GoogleMap from '../components/google_map';
 
 class CityWeatherList extends Component {
 
 	renderWeather(cityData) {
 		const cityName = cityData.city.name;
-		{/*const cityTemp = cityData.list.map(weather => weather.main.temp);*/}
-		const cityTemp = cityData.list[0].main.temp;
+		const cityTemp = cityData.list.map(weather => weather.main.temp);
+		{/*const cityTemp = cityData.list[0].main.temp;*/}
 		const cityPressure = cityData.list[0].main.pressure;
 		const cityHumidity = cityData.list[0].main.humidity;
 		
@@ -15,7 +16,9 @@ class CityWeatherList extends Component {
 			<tr key={cityName}>
 				<td>{cityName}</td>
 				<td>
-					{cityTemp}
+					<Sparklines height={120} width={180} data={cityTemp}>
+						<SparklinesLine color="red" />
+					</Sparklines>
 				</td>
 				<td>
 					{cityPressure}
