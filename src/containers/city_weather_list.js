@@ -1,31 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {Sparklines, SparklinesLine } from 'react-sparklines';
+import _ from 'lodash';
+import Data from '../components/data';
 import GoogleMap from '../components/google_map';
 
 class CityWeatherList extends Component {
 
 	renderWeather(cityData) {
 		const cityName = cityData.city.name;
-		const cityTemp = cityData.list.map(weather => weather.main.temp);
-		{/*const cityTemp = cityData.list[0].main.temp;*/}
-		const cityPressure = cityData.list[0].main.pressure;
-		const cityHumidity = cityData.list[0].main.humidity;
+		const cityTemp = _.map(cityData.list.map(weather => weather.main.temp), (temp) => temp - 273);
+		const cityPressure =  cityData.list.map(weather => weather.main.pressure);
+		const cityHumidity =  cityData.list.map(weather => weather.main.humidity);
+		const { lon, lat } =  cityData.city.coord;
 		
 		return (
 			<tr key={cityName}>
-				<td>{cityName}</td>
-				<td>
-					<Sparklines height={120} width={180} data={cityTemp}>
-						<SparklinesLine color="red" />
-					</Sparklines>
-				</td>
-				<td>
-					{cityPressure}
-				</td>
-				<td>
-					{cityHumidity}
-				</td>
+				<td><GoogleMap lon={lon} lat={lat} /></td>
+				<td><Data data={cityTemp} color="orange" units="C"/></td>
+				<td><Data data={cityPressure} color="blue" units="hPa" /></td>
+				<td><Data data={cityHumidity} color="red" units="%"/></td>
 			</tr>
 		);
 	}
@@ -35,9 +28,9 @@ class CityWeatherList extends Component {
 				<thead>
 					<tr>
 						<th>City</th>
-						<th>Temperature</th>
-						<th>Pressure</th>
-						<th>Humidity</th>
+						<th>Temperature (C)</th>
+						<th>Pressure (hPa)</th>
+						<th>Humidity (%)</th>
 					</tr>
 				</thead>
 				<tbody>

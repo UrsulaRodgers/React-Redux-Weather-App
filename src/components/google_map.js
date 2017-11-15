@@ -1,6 +1,8 @@
+/* eslint-disable */
+
 import React, {Component} from 'react';
 
-{/*class GoogleMap extends Component {
+class GoogleMap extends Component {
 
 	componentDidMount() {
 		new google.maps.Map(this.refs.map, {
@@ -11,9 +13,10 @@ import React, {Component} from 'react';
 			}
 		});
 	}
+
 	render(){
 		return <div ref="map" />;
 	}
-}*/}
+}
 
-{/*export default GoogleMap;*/}
+export default GoogleMap;
